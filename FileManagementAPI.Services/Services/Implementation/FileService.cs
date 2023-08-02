@@ -1,18 +1,15 @@
-﻿using File.Services.Models;
-using File.Services.Services.Interfaces;
+﻿using FileManagementAPI.Services.Models;
+using FileManagementAPI.Services.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using File.Services.Converter.Implementation;
-using File.Database;
-using File.Database.Repository.Implementation;
-using File.Database.Repository.Interface;
-using File.Services.Converter.Interfaces;
+using FileManagementAPI.Database;
+using FileManagementAPI.Database.Repository.Interface;
 
-namespace File.Services.Services.Implementation
+namespace FileManagementAPI.Services.Services.Implementation
 {
     public class FileService: IFileService
     {

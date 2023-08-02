@@ -1,13 +1,11 @@
 using System.Collections.Generic ;
 using Microsoft.EntityFrameworkCore;
-using File.Database;
 using System.Data;
-using File.Services.Services.Interfaces;
-using File.Services.Services.Implementation;
-using File.Database.Repository.Implementation;
-using File.Database.Repository.Interface;
-using File.Services.Converter.Implementation;
-using File.Services.Converter.Interfaces;
+using FileManagementAPI.Database.Repository.Implementation;
+using FileManagementAPI.Database.Repository.Interface;
+using FileManagementAPI.Services.Services.Interfaces;
+using FileManagementAPI.Services.Services.Implementation.Converter;
+using FileManagementAPI.Services.Services.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();

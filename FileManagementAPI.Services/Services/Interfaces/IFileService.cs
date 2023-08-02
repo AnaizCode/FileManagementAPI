@@ -1,7 +1,7 @@
-﻿using File.Database;
+﻿using FileManagementAPI.Database;
 using Microsoft.AspNetCore.Http;
 
-namespace File.Services.Services.Interfaces
+namespace FileManagementAPI.Services.Services.Interfaces
 {
    public interface IFileService
     {

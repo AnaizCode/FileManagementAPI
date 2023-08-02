@@ -1,11 +1,12 @@
-﻿using File.Database.Repository.Interface;
+﻿using FileManagementAPI.Database.Repository.Interface;
+using FileManagementAPI.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace File.Database.Repository.Implementation
+namespace FileManagementAPI.Database.Repository.Implementation
 {
     public  class FilesRepository: IFilesRepository
     {

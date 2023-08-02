@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\File.Database\File.Database.csproj" />
-    <ProjectReference Include="..\FileServices\File.Services.csproj" />
+    <ProjectReference Include="..\FileManagementAPI.Database\FileManagementAPI.Database.csproj" />
+    <ProjectReference Include="..\FileManagementAPI.Services\FileManagementAPI.Services.csproj" />
   </ItemGroup>
 
 </Project>

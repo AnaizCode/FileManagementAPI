@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
-using File.Services.Services.Interfaces;
-using File.Database;
+using FileManagementAPI.Services.Services.Interfaces;
+using FileManagementAPI.Database;
 using File.API.Utils;
 
 namespace File.Services.Controllers

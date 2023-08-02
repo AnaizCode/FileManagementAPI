@@ -1,5 +1,5 @@
-using File.Services.Services.Interfaces;
-using File.Services.Services.Implementation;
+using FileManagementAPI.Services.Services.Interfaces;
+using FileManagementAPI.Services.Services.Implementation;
 using Xunit;
 using System;
 using System.Diagnostics;
@@ -13,14 +13,14 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Moq;
 using System.Text;
-using File.Database.Repository.Interface;
-using File.Database;
+using FileManagementAPI.Database.Repository.Interface;
+using FileManagementAPI.Database;
 using AutoFixture.Xunit2;
-using File.Services.Models;
-using File.Services.Converter.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http.Internal;
+using FileManagementAPI.Services.Models;
 
 namespace File.Tests
 {

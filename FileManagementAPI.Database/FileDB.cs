@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace File.Database
+namespace FileManagementAPI.Database
 {
     public class FileDB
     {

@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using File.Database;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 
-namespace File.Database
+namespace FileManagementAPI.Database
 {
   
         public class DBFileContext : DbContext

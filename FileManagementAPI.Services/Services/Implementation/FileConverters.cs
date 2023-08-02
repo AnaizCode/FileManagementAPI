@@ -1,11 +1,10 @@
-﻿using File.Database;
-using File.Services.Converter.Interfaces;
-using File.Services.Models;
+﻿using FileManagementAPI.Database;
+using FileManagementAPI.Services.Models;
+using FileManagementAPI.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using System.Text;
 
-namespace File.Services.Converter.Implementation
+namespace FileManagementAPI.Services.Services.Implementation.Converter
 {
     public class FileConverters : IFileConverters
     {
