@@ -1,4 +1,5 @@
-﻿using FileManagementAPI.Database;
+﻿using FileManagementAPI.API.Models;
+using FileManagementAPI.Database;
 
 namespace File.API.Utils
 {
@@ -23,6 +24,33 @@ namespace File.API.Utils
                 string contentType = "application/pdf";
                 IFormFile file = new FormFile(memoryStream, 0, memoryStream.Length, contentType, filename);
                 return file;
+            }
+        }
+
+        public static FileDB convertToModelSaveFile(RequestSaveFileModel requestSaveFileModel)
+        {
+
+            return new FileDB()
+            {
+                FileName = requestSaveFileModel.FileName,
+                FileId = requestSaveFileModel.FileId,
+                BinaryFile = ConvertFromBinaryToString(ConvertIFormFileToBinary(requestSaveFileModel.File))
+            };
+        }
+
+        private static string ConvertFromBinaryToString(byte[] binaryData)
+        {
+
+            string text = Convert.ToBase64String(binaryData);
+            return text;
+        }
+
+        private static  byte[] ConvertIFormFileToBinary(IFormFile file)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                return memoryStream.ToArray();
             }
         }
     }

@@ -4,7 +4,6 @@ using System.Data;
 using FileManagementAPI.Database.Repository.Implementation;
 using FileManagementAPI.Database.Repository.Interface;
 using FileManagementAPI.Services.Services.Interfaces;
-using FileManagementAPI.Services.Services.Implementation.Converter;
 using FileManagementAPI.Services.Services.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +17,6 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddScoped<IFilesRepository, FilesRepository>();
-builder.Services.AddTransient<IFileConverters, FileConverters>() ;
-
 builder.Services.AddScoped<IFileService, FileService>();
 
 var app = builder.Build();

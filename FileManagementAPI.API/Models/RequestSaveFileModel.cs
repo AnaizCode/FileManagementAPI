@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace FileManagementAPI.Services.Models
+namespace FileManagementAPI.API.Models
 {
     public class RequestSaveFileModel
     {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using FileManagementAPI.Services.Services.Interfaces;
 using FileManagementAPI.Database;
 using File.API.Utils;
+using FileManagementAPI.API.Models;
 
 namespace File.Services.Controllers
 {
@@ -21,7 +22,11 @@ namespace File.Services.Controllers
         [Route("api/file/")]
         public IActionResult  SaveFileDataBase( IFormFile file) {
 
-            bool v = _IFileService.SaveFile(file);
+            RequestSaveFileModel requestModel = new RequestSaveFileModel();
+            requestModel.FileName = file.FileName;
+            requestModel.File = file;
+            FileDB filedb_ = UtilsConverter.convertToModelSaveFile(requestModel);
+            bool v = _IFileService.SaveFile(filedb_);
             return Ok(v); 
         }
 
@@ -55,6 +60,7 @@ namespace File.Services.Controllers
         public IActionResult UpdateFileNameDatabase([FromRoute] string varName, [FromRoute] string newName)
         {
 
+
             bool Results = _IFileService.UpdateFile(varName, newName);
             if (Results == true) { return Ok(Results); }
             else { return BadRequest(); }
@@ -64,8 +70,11 @@ namespace File.Services.Controllers
         [Route("api/file/file/{varName}")]
         public IActionResult UpdateFileContentDatabase([FromRoute] string varName, IFormFile varFile)
         {
-
-            bool Results = _IFileService.UpdateFile(varName,varFile);
+             RequestSaveFileModel requestModel = new RequestSaveFileModel();
+            requestModel.FileName = varFile.FileName;
+            requestModel.File = varFile;
+            FileDB filedb_ = UtilsConverter.convertToModelSaveFile(requestModel);
+            bool Results = _IFileService.UpdateFile(varName, filedb_);
             if (Results == true) { return Ok(Results); }
             else { return BadRequest(); }
         }
@@ -75,9 +84,12 @@ namespace File.Services.Controllers
         [Route("api/file/name/file/{varName}/{newName}")]
         public IActionResult UpdateFileContentAndNameDatabase([FromRoute] string varName, [FromRoute] string newName, IFormFile varFile)
         {
-
+            RequestSaveFileModel requestModel = new RequestSaveFileModel();
+            requestModel.FileName = varFile.FileName;
+            requestModel.File = varFile;
+            FileDB filedb_ = UtilsConverter.convertToModelSaveFile(requestModel);
             bool Results = false;
-            bool fileResult = _IFileService.UpdateFile(varName, varFile);
+            bool fileResult = _IFileService.UpdateFile(varName, filedb_);
             bool fileName = _IFileService.UpdateFile(varName, newName);
             if (fileResult == true && fileName == true) { Results = true; }
             if (Results == true) { return Ok(Results); }

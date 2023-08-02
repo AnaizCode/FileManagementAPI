@@ -5,12 +5,12 @@ namespace FileManagementAPI.Services.Services.Interfaces
 {
    public interface IFileService
     {
-       bool SaveFile(IFormFile file);
+       bool SaveFile(FileDB file);
        FileDB GetFile(string varName);
        bool DeleteFile(string varName);
        public bool UpdateFile(string varName, string newName);
 
-       public bool UpdateFile(string varName, IFormFile file);
+       public bool UpdateFile(string varName, FileDB file);
 
     }
 }
