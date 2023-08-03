@@ -20,108 +20,175 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.Internal;
-using FileManagementAPI.Services.Models;
 
 namespace File.Tests
 {
     [CollectionDefinition("Tests", DisableParallelization = true)]
+
     public class UnitTest1
     {
         private IFileService _FileService;
-        private IFormFile _file;
+        private IFormFile _Formfile;
         private IFilesRepository _filesRepository;
-        private IFileConverters _converters;
+
         public UnitTest1()
         {
-            this._FileService = Substitute.For<IFileService>();
-            
+            //this._FileService = Substitute.For<IFileService>();
             this._filesRepository = Substitute.For<IFilesRepository>();
-            this._converters = Substitute.For<IFileConverters>();
+            this._FileService = Substitute.For<IFileService>();
         }
+
         [Theory, AutoData]
-        public void WhenFileServiceReturnsRightString(FileDB file)
+        public void ServiceSaveFileWorks(FileDB fileDBReplicate)
         {
-
             //Arrange
-           var FileRequest = new RequestSaveFileModel() ;
-
-            _filesRepository.AddFile(file).Returns(true);
-            _converters.convertToModelSaveFile(FileRequest).Returns(file);
-
-
-            var FileService = new FileService(_filesRepository, _converters);
-            var _file = GetFormFile("Test44");
-
+            _filesRepository.AddFile(fileDBReplicate).Returns(true);
+            var fileService = new FileService(_filesRepository);
 
             // Act
-            var result = FileService.SaveFile(_file);
+            var result = fileService.SaveFile(fileDBReplicate);
 
-            // Assert
+            //Asert
             Assert.NotNull(result);
             Assert.IsType<bool>(result);
             Assert.Equal(true, result);
 
         }
 
-        public IFormFile GetFormFile(string str)
+        [Theory, AutoData]
+        public void ServiceSaveFileFails(FileDB fileDBReplicate)
         {
-            //Setup mock file using a memory stream
-            var content = str;
-            var fileName = "test.pdf";
-            var stream = new MemoryStream();
-            var writer = new StreamWriter(stream);
-            writer.Write(content);
-            writer.Flush();
-            stream.Position = 0;
+            //Arrange
+            _filesRepository.AddFile(fileDBReplicate).Returns(false);
+            var fileService = new FileService(_filesRepository);
 
-            //create FormFile with desired data
-            IFormFile file = new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
-            return file;
+            // Act
+            var result = fileService.SaveFile(fileDBReplicate);
+
+            //Asert
+            Assert.NotNull(result);
+            Assert.IsType<bool>(result);
+            Assert.Equal(false, result);
+
         }
 
-        //[Theory]
-        //[InlineData("nombreArchivo")]
-        //public void WhenFileServiceGetFileWorks(string Filename) {
-        //    //arrange
-        //    var file = new FileDB();
-        //    _filesRepository.GetFile(Filename).Returns(file);
-
-        //    var fileService = new FileService(_filesRepository);
-
-        //    //act
-        //    var result =  fileService.GetFile(Filename);
-
-        //    //assert
-        //    Assert.NotNull(result);
-        //    Assert.IsType<FileDB>(result);
-        //    Assert.Equal(file, result);
-
-        //}
-
-        [Theory]
-        [InlineData("file2.txt")]
-        public void WhenFilesRepositoryGetFileWorks(string Filename)
+        [Theory, AutoData]
+        public void ServiceGetFileWorks(string varName, FileDB fileDBReplicate)
         {
-           var files = new List<FileDB>
-{
-    new FileDB { FileName = "file1.txt" },
-    new FileDB { FileName = "file2.txt" },
-    new FileDB { FileName = "file2.txt" },
-    new FileDB { FileName = "file2.txt" },
-    new FileDB { FileName = "file2.txt" },
-    new FileDB { FileName = "file2.txt" },
-}.AsQueryable();
+            //Arrange
+            _filesRepository.GetFile(varName).Returns<FileDB>(fileDBReplicate);
+            var fileService = new FileService(_filesRepository);
 
-var mockDbSet = new Mock<DbSet<FileDB>>();
-            var context = new Mock<DBFileContext>();
-            context.Setup(c => c.Files).Returns(mockDbSet.Object);
+            // Act
+            FileDB result = fileService.GetFile(varName);
 
+            //Asert
+            Assert.NotNull(result);
+            Assert.IsType<FileDB>(result);
+            Assert.Equal(fileDBReplicate, result);
 
-            //act
-            var result = _filesRepository.GetFile(Filename);
+        }
 
-            //assert
+        [Theory, AutoData]
+        public void ServiceDeleteFileWorks(string varName)
+        {
+            //Arrange
+            _filesRepository.DeleteFile(varName).Returns(true);
+            var fileService = new FileService(_filesRepository);
+
+            // Act
+            var result = fileService.DeleteFile(varName);
+
+            //Asert
+            Assert.NotNull(result);
+            Assert.IsType<bool>(result);
+            Assert.Equal(true, result);
+
+        }
+
+        [Theory, AutoData]
+        public void ServiceDeleteFileFails(string varName)
+        {
+            //Arrange
+            _filesRepository.DeleteFile(varName).Returns(false);
+            var fileService = new FileService(_filesRepository);
+
+            // Act
+            var result = fileService.DeleteFile(varName);
+
+            //Asert
+            Assert.NotNull(result);
+            Assert.IsType<bool>(result);
+            Assert.Equal(false, result);
+
+        }
+
+        [Theory, AutoData]
+        public void ServiceUpdateFileNameWorks(string varName, string newName)
+        {
+            //Arrange
+            _filesRepository.UpdateFile(varName, newName).Returns(true);
+            var fileService = new FileService(_filesRepository);
+
+            // Act
+            var result = fileService.UpdateFile(varName, newName);
+
+            //Asert
+            Assert.NotNull(result);
+            Assert.IsType<bool>(result);
+            Assert.Equal(true, result);
+
+        }
+
+        [Theory, AutoData]
+        public void ServiceUpdateFileNameFails(string varName, string newName)
+        {
+            //Arrange
+            _filesRepository.UpdateFile(varName, newName).Returns(false);
+            var fileService = new FileService(_filesRepository);
+
+            // Act
+            var result = fileService.UpdateFile(varName, newName);
+
+            //Asert
+            Assert.NotNull(result);
+            Assert.IsType<bool>(result);
+            Assert.Equal(false, result);
+
+        }
+
+        [Theory, AutoData]
+        public void ServiceUpdateFileContentWorks(string varName, FileDB file)
+        {
+            //Arrange
+            _filesRepository.UpdateFile(varName, file).Returns(true);
+            var fileService = new FileService(_filesRepository);
+
+            // Act
+            var result = fileService.UpdateFile(varName, file);
+
+            //Asert
+            Assert.NotNull(result);
+            Assert.IsType<bool>(result);
+            Assert.Equal(true, result);
+
+        }
+
+        [Theory, AutoData]
+        public void ServiceUpdateFileContentFails(string varName, FileDB file)
+        {
+            //Arrange
+            _filesRepository.UpdateFile(varName, file).Returns(false);
+            var fileService = new FileService(_filesRepository);
+
+            // Act
+            var result = fileService.UpdateFile(varName, file);
+
+            //Asert
+            Assert.NotNull(result);
+            Assert.IsType<bool>(result);
+            Assert.Equal(false, result);
+
         }
     }
-    
     }

@@ -9,8 +9,6 @@ namespace FileManagementAPI.Services.Services.Interfaces
        FileDB GetFile(string varName);
        bool DeleteFile(string varName);
        public bool UpdateFile(string varName, string newName);
-
        public bool UpdateFile(string varName, FileDB file);
-
     }
 }

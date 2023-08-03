@@ -20,10 +20,21 @@ namespace FileManagementAPI.Database.Repository.Implementation
 
         public bool AddFile(FileDB file)
         {
-            context.Files.Add(file);
+            try
+            {
 
-            context.SaveChanges();
-            return true;
+                context.Files.Add(file);
+
+                context.SaveChanges();
+
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while Adding the file: " + ex.Message);
+                return false;
+            }
         }
 
         public FileDB GetFile(string varName)
@@ -68,6 +79,7 @@ namespace FileManagementAPI.Database.Repository.Implementation
                 context.SaveChanges();
                 return true;
             }
+            Console.WriteLine("The File doensnt exist");
             return false;
         }
 
@@ -84,6 +96,7 @@ namespace FileManagementAPI.Database.Repository.Implementation
                 context.SaveChanges();
                 return true;
             }
+            Console.WriteLine("The File doensnt exist");
             return false;
         }
 

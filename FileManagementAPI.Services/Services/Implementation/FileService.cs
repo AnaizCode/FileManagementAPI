@@ -19,15 +19,10 @@ namespace FileManagementAPI.Services.Services.Implementation
         {
             _repository = repository;
         }
-
-
         public bool SaveFile(FileDB file) {
            
-            _repository.AddFile(file);
-
-
-            return true; }
-
+           return _repository.AddFile(file); 
+        }
 
         public FileDB GetFile(string varName)
         {
@@ -35,16 +30,13 @@ namespace FileManagementAPI.Services.Services.Implementation
 
         }
 
-        public bool DeleteFile(string varName) {
-
-
-            return _repository.DeleteFile(varName);
-            
+        public bool DeleteFile(string varName) 
+        {
+            return _repository.DeleteFile(varName);    
         }
 
-        public bool UpdateFile(string varName, string newName) {
-
-
+        public bool UpdateFile(string varName, string newName) 
+        {
             return _repository.UpdateFile( varName, newName);
         }
 
@@ -52,7 +44,5 @@ namespace FileManagementAPI.Services.Services.Implementation
            
             return _repository.UpdateFile(varName, file); 
         }
-
-
     }
 }
